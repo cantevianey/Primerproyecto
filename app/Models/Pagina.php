@@ -8,7 +8,7 @@ class Pagina extends Model
 {
     protected $table= 'paginas';
     public function ObtenerListado(){
-        //$listadousuarios=Pagina::all();
-        //return $listadousuarios;
+        $listadousuarios=Pagina::all();
+        return $listadousuarios;
     }
 }
