@@ -6,6 +6,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\PrincipalController;
 use App\Models\Pagina;
 
+
 /*
 Route::get('/', function () {
     return view('welcome');
@@ -32,3 +33,76 @@ Route::get('/principal', function(){
 })->name('principal');
 
 Route::get('/empresa',[HomeController::class,'empresa'])->name('empresa');
+
+Route::get('nuevoregistro', function(){
+$pagina=new Pagina;
+$pagina->name='CARLOS';
+$pagina->email='maria4@gmail.com';
+$pagina->email_verified_at=date('Y-m-d');
+$pagina->password='123456';
+$pagina->avatar='user.png';
+$pagina->telefono='999999';
+$pagina->calle='89';
+$pagina->save();
+return $pagina;
+});
+
+Route::get('buscarpaginaid', function(){
+    $post=Pagina::find(1);
+    return $post;
+});
+
+Route::get ('buscarxname', function(){
+    $post=Pagina::where('name','carlos')->first();
+    return $post;
+});
+
+Route::get('obtenertodos', function(){
+    $post=Pagina::all();
+    return $post;
+});
+
+Route::get('updatename',function(){
+    $post=Pagina::where('name','CARLOS')->first();
+    $post->email='agongoraescalante125@gmail.com';
+    $post->save();
+    return $post;
+});
+
+Route::get('filter',function(){
+    $posts=Pagina::where('calle','like','%78%')->get();
+    return $posts;
+});
+
+Route::get('trescampos',function(){
+    $posts=Pagina::select('name','email','telefono')->get();
+    return $posts;
+});
+
+Route::get('filtroxnumreg', function(){
+    $post=Pagina::select("name","email")->orderBy("name")->take(2)->get();
+    return $post;
+});
+
+Route::get('eliminar_registro', function(){
+    $post=Pagina:: find(5);
+    $post->delete();
+    return "Eliminado";
+});
+
+//Obtener la fecha conforme a un formato
+Route::get('Obtenerfechaformato',function(){
+$post=Pagina::select("name","email","created_at")->find(3);
+//return $post->created_at->format('d-m-Y');
+//return $post->created_at->format('d/m/Y');
+return $post;
+});
+
+//Obtener el valor de is_active
+Route::get('Obtenerestatus', function(){
+$post=Pagina :: find(1);
+//return $post->created_at->format('d-m-Y');
+//return $post->is_active;
+// dd función de depuración que muestra el contenido de una variable
+dd($post->is_active);
+});
