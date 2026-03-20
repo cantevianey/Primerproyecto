@@ -23,7 +23,10 @@ Route::get('post/about/{param?}/{nombre?}',[PostController::class, 'About']);
 
 Route::get('/contact', function(){
     $nombre = "Vianey Guadalupe Cante Cab";
-    return view('layouts.contact', ['nombre'=>$nombre, 'carrera'=>'Doctor en Sistemas Computacionesles']);
+    return view('contact', [
+        'nombre' => $nombre, 
+        'carrera' => 'Doctor en Sistemas Computacionales'
+    ]);
 })->name('contact');
 
 Route::get('/principal', function(){
