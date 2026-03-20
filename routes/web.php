@@ -111,3 +111,9 @@ dd($post->is_active);
 });
 
 Route::put('/actualizar-dato/{id}',[HomeController::class,'update'])->name('dato.update');
+
+// Ruta para eliminación FÍSICA (DELETE permanente)
+Route::delete('/eliminar-fisico/{id}',[HomeController::class,'destroyFisico'])->name('dato.destroyFisico');
+ 
+// Ruta para eliminación LÓGICA (desactivar is_active)
+Route::put('/eliminar-logico/{id}',[HomeController::class,'destroyLogico'])->name('dato.destroyLogico');

@@ -64,6 +64,15 @@
                         <button class='btn btn-primary' onclick="carga_modal({{$usuario->id}}, '{{$usuario->name}}', '{{$usuario->calle}}')" data-id="{{$usuario->id}}" data-nombre="{{$usuario->name}}" data-calle="{{$usuario->calle}}" data-toggle="modal" data-target="#myModal" title="Editar usuario">
                             <span class='fa-solid fa-pencil'></span>
                         </button>
+
+                        {{-- Botón Eliminación LÓGICA (desactiva el registro, is_active=false) --}}
+                        <button class='btn btn-warning' onclick="eliminar_logico({{$usuario->id}}, '{{$usuario->name}}')" title="Desactivar usuario (Eliminación Lógica)">
+                            <span class='fa-solid fa-eye-slash'></span>
+                        </button>
+                        {{-- Botón Eliminación FÍSICA (borra el registro permanentemente) --}}
+                        <button class='btn btn-danger' onclick="eliminar_fisico({{$usuario->id}}, '{{$usuario->name}}')" title="Eliminar usuario permanentemente (Eliminación Física)">
+                            <span class='fa-solid fa-trash'></span>
+                        </button>
                     </td>
                     </tr>
                 @endforeach    

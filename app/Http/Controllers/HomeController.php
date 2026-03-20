@@ -37,4 +37,24 @@ class HomeController extends Controller
         }
         return $respuesta;       
     }
+
+    // Eliminación FÍSICA: borra el registro de la base de datos permanentemente
+    public function destroyFisico($id){
+        $usuarios=new Pagina();
+        $resultado=$usuarios->EliminarFisico($id);
+        if($resultado){
+            return response()->json(['mensaje'=>'Registro eliminado físicamente','status'=>'ok']);
+        }
+        return response()->json(['mensaje'=>'Registro no encontrado','status'=>'error'],404);
+    }
+ 
+    // Eliminación LÓGICA: desactiva el registro (is_active = false), no lo borra
+    public function destroyLogico($id){
+        $usuarios=new Pagina();
+        $resultado=$usuarios->EliminarLogico($id);
+        if($resultado){
+            return response()->json(['mensaje'=>'Registro desactivado lógicamente','status'=>'ok','registro'=>$resultado]);
+        }
+        return response()->json(['mensaje'=>'Registro no encontrado','status'=>'error'],404);
+    }
 }   

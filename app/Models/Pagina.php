@@ -37,4 +37,25 @@ class Pagina extends Model
         $registro=Pagina::find($id);
         return $registro;
     }
+
+    // Eliminación FÍSICA: borra el registro permanentemente de la base de datos
+    public function EliminarFisico($id){
+        $registro=Pagina::find($id);
+        if(!empty($registro)){
+            $registro->delete();
+            return true;
+        }
+        return false;
+    }
+ 
+    // Eliminación LÓGICA: cambia is_active a false, el registro sigue en la BD
+    public function EliminarLogico($id){
+        $registro=Pagina::find($id);
+        if(!empty($registro)){
+            $registro->is_active=false;
+            $registro->save();
+            return $registro;
+        }
+        return false;
+    }
 }

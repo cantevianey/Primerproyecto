@@ -172,6 +172,52 @@
             $('#myModal').modal('show');
         }
 
+        // Función para ELIMINACIÓN LÓGICA (desactiva el registro, is_active = false)
+        function eliminar_logico(id, nombre){
+            if(!confirm('¿Deseas DESACTIVAR el registro de: ' + nombre + '?\n(El registro no se borrará, solo quedará inactivo)')){
+                return;
+            }
+            $.ajax({
+                url: '/eliminar-logico/' + id,
+                type: 'POST',
+                data: {
+                    _method: 'PUT',
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response){
+                    alert(response.mensaje);
+                    location.reload();
+                },
+                error: function(xhr){
+                    console.log(xhr.responseText);
+                    alert('Error al desactivar el registro: ' + xhr.status);
+                }
+            });
+        }
+ 
+        // Función para ELIMINACIÓN FÍSICA (borra el registro permanentemente de la BD)
+        function eliminar_fisico(id, nombre){
+            if(!confirm('¿Estás seguro de ELIMINAR PERMANENTEMENTE el registro de: ' + nombre + '?\n¡Esta acción NO se puede deshacer!')){
+                return;
+            }
+            $.ajax({
+                url: '/eliminar-fisico/' + id,
+                type: 'POST',
+                data: {
+                    _method: 'DELETE',
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response){
+                    alert(response.mensaje);
+                    location.reload();
+                },
+                error: function(xhr){
+                    console.log(xhr.responseText);
+                    alert('Error al eliminar el registro: ' + xhr.status);
+                }
+            });
+        }
+ 
         $("#editForm").on('submit', function(e){
             e.preventDefault();
             alert($(this).serialize());
