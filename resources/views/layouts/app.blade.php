@@ -5,10 +5,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/boostrap.min.css"
-    />
-  <link rel="stylesheet" href="https://cdn.datatables.net/2.3.7/css/dataTables.dataTables.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/boostrap.min.css"/>
+  <link rel="stylesheet" href="https://cdn.datatables.net/2.3.6/css/dataTables.dataTables.css" />
   <style>
     .fakeimg{
         height: 200px;
@@ -109,12 +107,42 @@
   <i class="fa-brands fa-whatsapp"></i> 
   <i class="fa-brands fa-telegram"></i>
   <i class="fa-brands fa-youtube"></i>
+  <i class="fa-brands fa-twitch"></i>
+  <i class="fa-brands fa-discord"></i>
+  <i class="fa-brands fa-snapchat"></i>
+  <i class="fa-brands fa-pinterest"></i>
+  <i class="fa-brands fa-reddit"></i>
+  <i class="fa-brands fa-tiktok"></i>
 </div>
-
+<div class="modal" tabindex="-1" id="myModal" role="dialog">
+  <form id="editForm" method="POST">
+    @csrf @method ('PUT')
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">@yield('titulo_modal')</h5>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <input type='hidden' name='id' id='id'>
+          <input type='text' name='name' id='name' class="form-control">
+          <input type='text' name='calle' id='calle' class="form-control">
+          <p>Modal body text goes here.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Save changes</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
 </body>
 </html>
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-<script src="https://cdn.datatables.net/2.3.6/js/dataTables.js"></script>
+<script src="https://cdn.datatables.net/2.3.7/js/dataTables.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     $(document).ready(function () {
@@ -125,8 +153,36 @@
                 { data: "email" },
                 { data: "telefono" },
                 { data: "calle" }
+                { data: "acciones"}
             ]
+          });
+    });  
+    
+    function carga_modal(id, nombre, calle){
+    $("#id").val(id);
+    $("#name").val(nombre);
+    $("#calle").val(calle);
+    $("#editForm").attr('action','/actualizar-dato/'+id);
+    $("#myModal").modal('show');
+  }
+
+  $("#editForm").on('submit', function(e){
+      e.preventDefault();
+      alert($(this).serialize());
+      $.ajax({
+          url:$(this).attr('action'),
+          type: 'POST',
+          method: 'PUT',
+          data: $(this).serialize(),
+          success: function(response){
+              //console.log(response);
+              $("#myModal").modal('hide');
+              location.reload();
+          },
+          error:function(xhr){
+            console.log(xhr.responseText);
           }
-        );
-    });         
+      })
+    })
+    
 </script>

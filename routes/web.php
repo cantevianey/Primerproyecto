@@ -106,3 +106,5 @@ $post=Pagina :: find(1);
 // dd función de depuración que muestra el contenido de una variable
 dd($post->is_active);
 });
+
+Route::put('/actualizar-dato/{id}',[HomeController::class,'update'])->name('dato.update');
